@@ -109,7 +109,7 @@ B59E28 B seadPrintHook // sead::system::print
 
 // Gravity hooks
 
-455230 NOP // PlayerJointControlKeeper::update+C0 prevents PlayerJointControlGroundPose from updating 
+455230 BL inverseKinematicsHook // PlayerJointControlKeeper::update+C0 prevents PlayerJointControlGroundPose from updating 
 4B5E30 B ProjectActorFactory // patches actor factory ctor with custom matching factory
 4BE628 B ProjectCameraPoserFactory // patches camera poser factory with custom matching factory
 

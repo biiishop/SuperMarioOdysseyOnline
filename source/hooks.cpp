@@ -23,7 +23,24 @@
 #include "math/seadVector.h"
 #include "rs/util/InputUtil.h"
 #include "sead/prim/seadSafeString.h"
+#include "server/gamemode/GameModeManager.hpp"
+#include "server/gamemode/modifiers/GravityModifier.hpp"
 #include "server/hns/HideAndSeekMode.hpp"
+#include "game/Player/PlayerJointControlGroundPose.h"
+
+void inverseKinematicsHook(PlayerJointControlGroundPose *param_0, float param_1, float param_2, float param_3, float param_4, bool param_5)
+{
+  if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK))
+  {
+    HideAndSeekMode* mode = GameModeManager::instance()->getMode<HideAndSeekMode>();
+    if (mode->isUseGravity())
+    {
+      return;
+    }
+  }
+  param_0->update(param_0, param_1, param_2, param_3, param_4, param_5);
+  return;
+}
 
 bool comboBtnHook(int port) {
     if (GameModeManager::instance()->isActive()) { // only switch to combo if any gamemode is active
